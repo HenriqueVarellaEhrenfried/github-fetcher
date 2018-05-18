@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import {Col, Row, Button, Navbar, Card, Input, Icon} from 'react-materialize'
 import {GITHUB_API} from './enviroment'
+import RepositoryCollection from './Components/RepositoryCollection'
 import './App.css';
 
 class App extends Component {
@@ -20,7 +21,7 @@ class App extends Component {
         <div className='git_fetcher'>
           <Navbar brand='GIT FETCHER' fixed={true} className='navbar-header'/>
           <Row className='item_card '>
-            <Col m={12} s={12}>
+            <Col s={12}>
                 <Card className='white' textClassName='black-text' title='GitHub repositories languages'>
                   <p>
                     Chose your languages
@@ -54,6 +55,8 @@ class App extends Component {
                 </Card>
             </Col>
           </Row>
+          {this.showRepositories()}
+
         </div>
     );
   }
@@ -83,6 +86,23 @@ class App extends Component {
     }).catch(error => {
       console.log(error);
     });
+  }
+  showRepositories(){
+    let languages = this.state.language;
+    let colletions = []
+    for(let i = 0; i < languages.length; i++){
+      colletions.push(
+        <Row key={Math.random()}>
+          <Col s={12}>
+            <RepositoryCollection 
+              language={this.state.language[i]}
+              language_result={this.state.language_result[i]}
+            />
+          </Col>
+        </Row>
+      )
+    }
+    return colletions
   }
 
 }
