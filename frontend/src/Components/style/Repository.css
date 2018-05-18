@@ -1,0 +1,4 @@
+.card_repository{
+    max-height: 850px;
+    overflow-y: scroll;
+}

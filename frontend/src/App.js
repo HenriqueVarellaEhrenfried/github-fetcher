@@ -96,7 +96,7 @@ class App extends Component {
           <Col s={12}>
             <RepositoryCollection 
               language={this.state.language[i]}
-              language_result={this.state.language_result[i]}
+              language_result={this.state.language_result[this.searchIndex(this.state.language[i])]}
             />
           </Col>
         </Row>
@@ -104,7 +104,14 @@ class App extends Component {
     }
     return colletions
   }
-
+  searchIndex(lang){
+    let repos = this.state.language_result;
+    for(let i=0; i < repos.length; i++){
+      if(repos[i].language === lang){
+        return i;
+      }
+    }
+  }
 }
 
 export default App;

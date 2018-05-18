@@ -13,7 +13,7 @@ class RepositoryCollection extends Component {
   render() {
     return (
         <div className='git_repository_collection'>
-            <Card className='green lighten-4' textClassName='black-text' title={this.props.language}>
+            <Card className='green lighten-4 card_repository' textClassName='black-text' title={this.props.language}>
                 {this.createRepositories()}
             </Card>
         </div>
@@ -29,11 +29,17 @@ class RepositoryCollection extends Component {
         for(let i = 0; i < items.length; i++){
             items_list.push(
                 <Repository
+                    key={Math.random()}
                     data={items[i]}
                 />
             )
         }
         return(items_list)
+      }
+      else{
+          if(popular_repositories){
+            console.log(`GOT ${popular_repositories.language}, EXPEXCTED ${this.props.language}`)
+          }
       }
   }
 }
