@@ -1,0 +1,12 @@
+.tableWrapper{
+    display: flex;
+    justify-content: center; 
+    
+}
+table{
+    align-self: center;
+}
+.repository-info{
+    max-width: 600px;
+       
+}

@@ -26,12 +26,12 @@ class Repository extends Component {
   render() {
     return (
         <div className='git_repository'>
-            <Card className='white' textClassName='black-text' title={this.state.repository.name}>
+            <Card className= {'white card-repo'}  
+            textClassName='black-text' title={this.state.repository.body[0][1].toUpperCase()}>
                 <Row>
                     <Col s={12}>
                         <Table 
-
-                            // headers={this.state.repository.header}
+                            classes={'centered highlight striped repository-info'}
                             body={this.state.repository.body}
                         />
                     </Col>

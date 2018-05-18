@@ -10,11 +10,13 @@ class Table extends Component {
   }  
   render() {
     return (
-        <table id={this.props.id} className={this.props.classes}>
-            <tbody>
-                {this.loadBody()}
-            </tbody>
-        </table>
+        <div className="tableWrapper">
+            <table id={this.props.id} className={this.props.classes}>
+                <tbody>
+                    {this.loadBody()}
+                </tbody>
+            </table>
+        </div>
     );
   }
 
@@ -33,7 +35,10 @@ class Table extends Component {
                         line.push(<td key={Math.random()}><a href={body[i][j]}>{body[i][j]}</a></td>)
                     }
                     else{
-                        line.push(<td key={Math.random()}>{body[i][j]}</td>)
+                        if(j === 0)
+                            line.push(<td key={Math.random()}><b>{body[i][j]}</b></td>)
+                        else
+                            line.push(<td key={Math.random()}>{body[i][j]}</td>)                        
                     }
                 }
             }

@@ -73,12 +73,10 @@ class App extends Component {
     this.setState({language:array_of_languages});
   }
   searchProjects(lang){
-    console.log("URL >>", `${GITHUB_API}/search/repositories?q=language:${lang}&s=star`)
     axios.get(`${GITHUB_API}/search/repositories?q=language:${lang}&s=star`).then( response => {
       console.log(response.data);
       let data = {};
       let state = this.state.language_result;
-      console.log(state);
       data['language'] = lang;
       data['repositories'] = response.data;
       state.push(data);
