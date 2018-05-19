@@ -23,5 +23,6 @@ CREATE TABLE repository(
     owner_login VARCHAR(256),
     pushed_at TIMESTAMP,
     stargazers_count INTEGER,
-    watchers_count INTEGER
+    watchers_count INTEGER,
+    when_saved TIMESTAMP
 );
