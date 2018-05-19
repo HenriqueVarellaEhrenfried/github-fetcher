@@ -18,6 +18,7 @@ module.exports = {
   createRepository: createRepository,
   updateRepository: updateRepository,
   removeRepository: removeRepository,
+  bulkInsertRepository: bulkInsertRepository
 }; 
 
 const fields =[
@@ -32,7 +33,8 @@ const fields =[
     "owner_login",
     "pushed_at",
     "stargazers_count",
-    "watchers_count"
+    "watchers_count",
+    "when_saved"
 ]
 
 function getAllRepositories(req, res, next){
@@ -47,8 +49,8 @@ function getAllRepositories(req, res, next){
 }
 
 function getSingleRepository(req, res, next){
-    var categoryID = parseInt(req.params.id);
-    db.one('SELECT * FROM repository WHERE ID = $1', categoryID).then( (data) => {
+    var ID = parseInt(req.params.id);
+    db.one('SELECT * FROM repository WHERE ID = $1', ID).then( (data) => {
         res.status(200).json({
             "result":data
         })
@@ -93,6 +95,7 @@ function updateRepository(req, res, next){
         req.body.pushed_at,
         req.body.stargazers_count,
         req.body.watchers_count, 
+        req.body.when_saved, 
         parseInt(req.params.id)
     ]).then(()=>{
       res.status(200)
@@ -106,8 +109,8 @@ function updateRepository(req, res, next){
 }
 
 function removeRepository(req, res, next){
-    var categoryID = parseInt(req.params.id);
-    db.result('DELETE FROM repository WHERE ID = $1', categoryID).then((result)=>{
+    var ID = parseInt(req.params.id);
+    db.result('DELETE FROM repository WHERE ID = $1', ID).then((result)=>{
         res.status(200).json({
             status:'Success'
         })
@@ -115,4 +118,43 @@ function removeRepository(req, res, next){
     .catch((err)=>{
         return next(err);
     })
+}
+function bulkInsertRepository(req, res, next){
+    var ID = parseInt(req.params.id);
+    var query = buildBulkSQL(req.body.items)
+    db.any(query).then((result)=>{
+        res.status(200).json({
+            status:'Success'
+        })
+    })
+    .catch((err)=>{
+        return next(err);
+    })
+}
+function buildBulkSQL(data){
+    let query = `INSERT INTO repository (${fields.join(', ')}) VALUES`
+    for(let i = 0; i < data.length; i++){
+        query = query + 
+        `(  '${data[i].repository_created_at}',
+            '${data[i].forks_count}',
+            '${data[i].language_used}',
+            '${data[i].repository_name}',
+            '${data[i].license_name}',
+            '${data[i].open_issues_count ? data[i].open_issues_count : 0}',
+            '${data[i].repository_html_url}',
+            '${data[i].owner_html}',
+            '${data[i].owner_login}',
+            '${data[i].pushed_at}',
+            '${data[i].stargazers_count}',
+            '${data[i].watchers_count}',
+            '${data[i].when_saved}'
+        )`
+        // Decide if it is the last entry
+        if( i + 1 > data.length - 1 )
+            query = query + ';'
+        else  
+            query = query + ','
+    }
+    console.log(query)
+    return query;
 }

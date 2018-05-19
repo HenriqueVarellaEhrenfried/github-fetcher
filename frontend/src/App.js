@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import {Col, Row, Button, Navbar, Card, Input, Icon} from 'react-materialize'
-import {GITHUB_API} from './enviroment'
+import {GITHUB_API, BACKUP_API} from './enviroment'
 import RepositoryCollection from './Components/RepositoryCollection'
 import './App.css';
 
@@ -79,8 +79,17 @@ class App extends Component {
       let state = this.state.language_result;
       data['language'] = lang;
       data['repositories'] = response.data;
+      let info = this.formatDataToSave(data['repositories']['items'])
+      this.insertInDatabase(info)
       state.push(data);
       this.setState({language_result: state});
+    }).catch(error => {
+      console.log(error);
+    });
+  }
+  insertInDatabase(data){
+    axios.post(`${BACKUP_API}/repositories_bulk`, {'items':data}).then( response => {
+      console.log(response.data);
     }).catch(error => {
       console.log(error);
     });
@@ -109,6 +118,30 @@ class App extends Component {
         return i;
       }
     }
+  }
+  formatDataToSave(data){
+    let date = (new Date()).toJSON()
+    let rep_info = []
+    console.log(data)
+    for(let i = 0; i < data.length; i++){      
+      rep_info.push({
+          'repository_name': data[i].name ? data[i].name : '',
+          'repository_created_at':data[i].created_at ? data[i].created_at : '', 
+          'forks_count': data[i].forks_count ? data[i].forks_count : '',
+          'language_used': data[i].language ? data[i].language : '',
+          'license_name': data[i].license ?  data[i].license.name ? data[i].license.name : 'No License' : 'No License',
+          'open_issues_count': data[i].open_issues_count ? data[i].open_issues_count : '', 
+          'repository_html_url': data[i].html_url ? data[i].html_url : '',
+          'pushed_at': data[i].pushed_at ? data[i].pushed_at : '',
+          'stargazers_count': data[i].stargazers_count ? data[i].stargazers_count : '',
+          'watchers_count': data[i].watchers_count ? data[i].watchers_count : '',
+          'owner_login': data[i].owner.login ? data[i].owner.login : '',
+          'owner_html': data[i].owner.html_url ? data[i].owner.html_url : '',
+          'when_saved': date
+      })
+    }
+    console.log(rep_info)
+    return rep_info;  
   }
 }
 
