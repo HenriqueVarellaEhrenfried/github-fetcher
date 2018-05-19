@@ -1,0 +1,14 @@
+{
+    "database":{
+        "user" : "postgres",
+        "password" : "123mudar",
+        "host" : "192.168.25.8",
+        "port" : "5432",
+        "name" : "git_fetcher"
+    },
+    "api":{
+        "base_route" : "/api",
+        "port" : 3001
+    }
+}
+
