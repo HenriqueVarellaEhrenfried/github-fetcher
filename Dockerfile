@@ -1,17 +1,8 @@
-FROM node:10.1.0-stretch
+FROM postgres:latest
 
-RUN apt-get -y update -qq && apt-get install -y -qq apt-utils tree
+COPY backend/database.sql .
 
-COPY . .
-WORKDIR frontend
-RUN npm install 
-RUN npm install serve -g
-# RUN npm run build
-RUN serve -s build -p 80 &
+ENV POSTGRES_USER postgres
+ENV POSTGRES_PASSWORD 123mudar
 
-WORKDIR ../backend
-RUN npm install 
-
-EXPOSE 5000
-
-CMD npm start
+CMD psql -U postgres --password 123mudar -f database.sql
