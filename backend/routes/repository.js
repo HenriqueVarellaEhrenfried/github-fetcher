@@ -37,6 +37,7 @@ const fields =[
     "when_saved"
 ]
 
+
 function getAllRepositories(req, res, next){
     db.any('SELECT * FROM repository').then((data) => {
         res.status(200).json({
@@ -61,9 +62,7 @@ function getSingleRepository(req, res, next){
 
 }
 
-// TODO: Refatorar para permitir a adição de mais de uma categoria
 function createRepository(req, res, next){
-    // console.log(req)
     let query = `INSERT INTO repository(${fields.join(', ')}) VALUES(${fields.map( f => "${" + f + "}").join(', ')})`  
     
     db.none(query, req.body)

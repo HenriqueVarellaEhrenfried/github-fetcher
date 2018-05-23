@@ -61,6 +61,7 @@ class App extends Component {
     );
   }
   getProjects(){
+    // function called to search projects in GitHub by language
     let array_of_languages = [];
     this.setState({language:[], language_result: []});
     for(let i = 1; i < 6; i++){
@@ -73,8 +74,8 @@ class App extends Component {
     this.setState({language:array_of_languages});
   }
   searchProjects(lang){
+    // function called to search projects in GitHub using its API
     axios.get(`${GITHUB_API}/search/repositories?q=language:${lang}&s=star`).then( response => {
-      console.log(response.data);
       let data = {};
       let state = this.state.language_result;
       data['language'] = lang;
@@ -88,6 +89,7 @@ class App extends Component {
     });
   }
   insertInDatabase(data){
+    // function called to save important data about the projects in my database
     axios.post(`${BACKUP_API}/repositories_bulk`, {'items':data}).then( response => {
       console.log(response.data);
     }).catch(error => {
@@ -95,6 +97,7 @@ class App extends Component {
     });
   }
   showRepositories(){
+    // function called create a cards that contain the repositories by language
     let languages = this.state.language;
     let colletions = []
     for(let i = 0; i < languages.length; i++){
@@ -112,6 +115,7 @@ class App extends Component {
     return colletions
   }
   searchIndex(lang){
+    // function called to search the index of the language
     let repos = this.state.language_result;
     for(let i=0; i < repos.length; i++){
       if(repos[i].language === lang){
@@ -120,9 +124,9 @@ class App extends Component {
     }
   }
   formatDataToSave(data){
+    // function called to format a json to pass to insertInDatabase
     let date = (new Date()).toJSON()
     let rep_info = []
-    console.log(data)
     for(let i = 0; i < data.length; i++){      
       rep_info.push({
           'repository_name': data[i].name ? data[i].name : '',
@@ -140,7 +144,6 @@ class App extends Component {
           'when_saved': date
       })
     }
-    console.log(rep_info)
     return rep_info;  
   }
 }

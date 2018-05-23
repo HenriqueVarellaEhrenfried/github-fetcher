@@ -11,6 +11,8 @@ router.get('/', function(req, res, next) {
 });
 
 
+//Use functions declared in repository.js 
+//And set endpoint
 router.get(`${settings.api.base_route}/repositories`, repositories.getAllRepositories);
 router.get(`${settings.api.base_route}/repositories/:id`, repositories.getSingleRepository);
 router.post(`${settings.api.base_route}/repositories`, repositories.createRepository);

@@ -41,6 +41,7 @@ class Repository extends Component {
     );
   }
   tableMounter(data){
+      // function used to build the body of the table
       let rep_info = {}
         rep_info['body'] = [
             ['Name', data.name ? data.name : ''],

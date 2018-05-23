@@ -1,3 +1,5 @@
+// This file is a connector to PostgreSQL
+
 var promise = require('bluebird');
 var settings = require('../settings.json');
 

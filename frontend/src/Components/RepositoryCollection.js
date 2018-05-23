@@ -24,8 +24,8 @@ class RepositoryCollection extends Component {
       if(popular_repositories && popular_repositories.language === this.props.language){
         let items = popular_repositories.repositories.items
         let items_list = []
-        for(let i = 0; i < items.length; i++){
-            
+        //create each repository as a card (The omponent Repository)
+        for(let i = 0; i < items.length; i++){            
             items_list.push(
                 <Col s={12} m={6} l={4} key={Math.random()}>
                     <Repository
