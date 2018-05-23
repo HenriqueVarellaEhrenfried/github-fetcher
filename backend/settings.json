@@ -4,7 +4,21 @@
         "password" : "88b6da6941f8fc3364011dfe5568d60c97bf691eed8b7b17c14286fe866fdeeb",
         "host" : "ec2-54-204-39-46.compute-1.amazonaws.com",
         "port" : "5432",
+        "name" : "d2cgg2j78e53cl"  
+    },
+    "database_prod":{
+        "user" : "nsitjuiybpsuff",
+        "password" : "88b6da6941f8fc3364011dfe5568d60c97bf691eed8b7b17c14286fe866fdeeb",
+        "host" : "ec2-54-204-39-46.compute-1.amazonaws.com",
+        "port" : "5432",
         "name" : "d2cgg2j78e53cl" 
+    },
+    "database_dev":{
+        "user" : "postgres",
+        "password" : "123mudar",
+        "host" : "localhost",
+        "port" : "5432",
+        "name" : "git_fetcher" 
     },
     "api":{
         "base_route" : "/api",

@@ -63,7 +63,7 @@ function getSingleRepository(req, res, next){
 
 // TODO: Refatorar para permitir a adição de mais de uma categoria
 function createRepository(req, res, next){
-    console.log(req)
+    // console.log(req)
     let query = `INSERT INTO repository(${fields.join(', ')}) VALUES(${fields.map( f => "${" + f + "}").join(', ')})`  
     
     db.none(query, req.body)
@@ -73,14 +73,13 @@ function createRepository(req, res, next){
         });
     })
     .catch((err)=>{
-        // console.log(err)
+        console.log(err)
         return next(err);
     })
 }
 
 function updateRepository(req, res, next){
     let query = `UPDATE repository SET ${fields.map( (f, i) => f+"=$"+(i+1)).join(', ')} WHERE id=$${fields.length+1}`
-    console.log(req.body)
     db.none(query,
     [
         req.body.repository_created_at,
@@ -155,6 +154,5 @@ function buildBulkSQL(data){
         else  
             query = query + ','
     }
-    console.log(query)
     return query;
 }
